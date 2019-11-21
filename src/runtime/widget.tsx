@@ -3,11 +3,11 @@ import { AllWidgetProps, BaseWidget, jsx, React } from "jimu-core";
 import { IMConfig } from "../config";
 import { JimuMapViewComponent, JimuMapView } from "jimu-arcgis";
 
-import DistanceMeasurement2D = require("esri/widgets/DistanceMeasurement2D");
+import Compass = require("esri/widgets/Compass");
 
 interface IState {
   jimuMapView: JimuMapView;
-  currentWidget: DistanceMeasurement2D;
+  currentWidget: Compass;
 }
 
 export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
@@ -36,18 +36,14 @@ export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
         jimuMapView: jmv
       });
 
-      // since the widget replaces the container, we must create a new DOM node
-      // so when we destory we will not remove the "ref" DOM node
-      const container = document.createElement("div");
-      this.myRef.current.appendChild(container);
-
-      const distanceMeasurement2D = new DistanceMeasurement2D({
-        view: jmv.view,
-        container: container
+      const compass = new Compass({
+        view: jmv.view
       });
+      jmv.view.ui.add(compass, "bottom-left");
+
       // Save reference to the "Current widget" in State so we can destroy later if necessary.
       this.setState({
-        currentWidget: distanceMeasurement2D
+        currentWidget: compass
       });
     }
   };
@@ -86,7 +82,6 @@ export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
         style={{ overflow: "auto" }}
       >
         {jmc}
-        <div className="here" ref={this.myRef}></div>
       </div>
     );
   }
