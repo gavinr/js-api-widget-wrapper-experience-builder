@@ -1,26 +1,22 @@
 /** @jsx jsx */
-import { AllWidgetProps, BaseWidget, jsx } from "jimu-core";
+import { AllWidgetProps, BaseWidget, jsx, React } from "jimu-core";
 import { IMConfig } from "../config";
-import {
-  JimuMapViewComponent,
-  JimuMapView,
-  loadArcGISJSAPIModules
-} from "jimu-arcgis";
+import { JimuMapViewComponent, JimuMapView } from "jimu-arcgis";
 
-// import { TabContent, TabPane, Nav, NavItem, NavLink, Button} from 'jimu-ui';
-// import defaultMessages from "./translations/default";
-// import Compass = require("esri/widgets/Compass");
+import DistanceMeasurement2D = require("esri/widgets/DistanceMeasurement2D");
 
 interface IState {
   jimuMapView: JimuMapView;
 }
 
 export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
-  Compass: typeof __esri.Compass;
+  private myRef = React.createRef<HTMLDivElement>();
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      jimuMapView: null
+    };
   }
 
   activeViewChangeHandler = (jmv: JimuMapView) => {
@@ -29,13 +25,9 @@ export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
         jimuMapView: jmv
       });
 
-      loadArcGISJSAPIModules(["esri/widgets/Compass"]).then(modules => {
-        [this.Compass] = modules;
-        console.log("creating compass - jmv.view", this.state.jimuMapView.view);
-        const compass = new this.Compass({
-          view: this.state.jimuMapView.view
-        });
-        this.state.jimuMapView.view.ui.add(compass, "top-right");
+      new DistanceMeasurement2D({
+        view: jmv.view,
+        container: this.myRef.current
       });
     }
   };
@@ -54,7 +46,7 @@ export default class Widget extends BaseWidget<AllWidgetProps<IMConfig>, any> {
               onActiveViewChange={this.activeViewChangeHandler}
             />
           )}
-        test
+        <div ref={this.myRef}></div>
       </div>
     );
   }
