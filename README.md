@@ -4,7 +4,8 @@ Example of how to include an [ArcGIS API for JavaScript widget](https://develope
 
 The main example here includes the [2D Measurement widget](https://developers.arcgis.com/javascript/latest/sample-code/widgets-measurement-2d/index.html). Click the download button above and extract the files to `client\your-extensions\widgets\js-api-widget-wrapper` to see it in action.
 
-![Screenshot](https://github.com/gavinr/js-api-widget-wrapper-experience-builder/raw/master/screencast.gif)
+[![Screenshot](https://github.com/gavinr/js-api-widget-wrapper-experience-builder/raw/master/screencast.gif)](https://gavinr.github.io/js-api-widget-wrapper-experience-builder/)
+
 
 ([builder interface](https://github.com/gavinr/js-api-widget-wrapper-experience-builder/raw/master/builder-screencast.mp4))
 
