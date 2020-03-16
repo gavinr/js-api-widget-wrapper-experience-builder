@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>fullScreen-16-hover</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Maptools_v0.2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-777.000000, -146.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="fullScreen-16-hover" transform="translate(777.000000, 146.000000)">
+                <path d="M14,0 L14,5 L12,5 L12,1.94 L9,1.94 L9,0 L14,0 Z M1.94,1.94 L5,1.94 L5,0 L0,0 L0,5 L1.94,5 L1.94,1.94 Z M1.94,12 L1.94,9 L0,9 L0,14 L5,14 L5,12 L1.94,12 Z M12,12 L9,12 L9,14 L14,14 L14,9 L12,9 L12,12 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

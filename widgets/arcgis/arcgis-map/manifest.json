@@ -1,0 +1,104 @@
+{
+  "name": "arcgis-map",
+  "label": "Map",
+  "type": "widget",
+  "version": "1.0.0",
+  "exbVersion": "1.0.0",
+  "author": "Esri R&D Center Beijing",
+  "description": "This is the widget used in developer guide",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "publishMessages": [
+    "EXTENT_CHANGE",
+    "DATA_RECORDS_SELECTION_CHANGE"
+  ],
+  "messageActions": [
+    {
+      "name": "displayFeatureSet",
+      "label": "Display feature set",
+      "uri": "message-actions/display-feature-set-action"
+    },
+    {
+      "name": "panTo",
+      "label": "Pan to",
+      "uri": "message-actions/pan-to-action",
+      "settingUri": "message-actions/pan-to-action-setting"
+    },
+    {
+      "name": "zoomToFeature",
+      "label": "Zoom to",
+      "uri": "message-actions/zoom-to-feature-action",
+      "settingUri": "message-actions/zoom-to-feature-action-setting"
+    },
+    {
+      "name": "flash",
+      "label": "Flash",
+      "uri": "message-actions/flash-action",
+      "settingUri": "message-actions/flash-action-setting"
+    },
+    {
+      "name": "filter",
+      "label": "Filter",
+      "uri": "message-actions/filter-action",
+      "settingUri": "message-actions/filter-action-setting"
+    }
+  ],
+  "defaultSize": {
+    "width": 400,
+    "height": 400
+  },
+  "properties": {
+    "hasLocale": false,
+    "autoBindDataSource": false,
+    "canCreateMapView": true,
+    "hasEmbeddedLayout": true,
+    "passDataSourceToChildren": false
+  },
+  "layouts": [
+    {
+      "name": "MapFixedLayout",
+      "label": "Map FixedLayout",
+      "type": "FIXED"
+    }
+  ],
+  "translatedLocales": [
+    "en",
+    "ar",
+    "bs",
+    "ca",
+    "cs",
+    "da",
+    "de",
+    "el",
+    "es",
+    "et",
+    "fi",
+    "fr",
+    "he",
+    "hr",
+    "hu",
+    "id",
+    "it",
+    "ja",
+    "ko",
+    "lt",
+    "lv",
+    "nb",
+    "nl",
+    "pl",
+    "pt-br",
+    "pt-pt",
+    "ro",
+    "ru",
+    "sl",
+    "sr",
+    "sv",
+    "th",
+    "tr",
+    "zh-cn",
+    "uk",
+    "vi",
+    "zh-hk",
+    "zh-tw"
+  ]
+}

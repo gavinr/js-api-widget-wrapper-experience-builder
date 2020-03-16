@@ -1,0 +1,8 @@
+{
+  "toolConifg": {
+    "canZoom": true,
+    "canHome": true,
+    "canSearch": true
+  },
+  "isUseCustomMapState": false
+}

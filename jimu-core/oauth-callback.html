@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ArcGIS Rest JS OAuth redirect</title>
+  </head>
+  <body>
+    <script src="./request.umd.min.js"></script>
+    <script src="./auth.umd.min.js"></script>
+    <script src="./js.cookie.js"></script>
+    <script>
+      function processAuthentication() {
+        const {query, hash} = getQueryAndHashObject();
+        const popup = query.popup === 'true';
+        if(hash.error){
+          alert(hash.error_description || hash.error_description);
+          const {portal, clientId, fromUrl} = query;
+          const redirectUri = `${window.location.origin}${window.location.pathname}?clientId=${clientId}&portal=${portal}&popup=${popup}&fromUrl=${fromUrl}`
+          const oauth2Options = {
+            portal,
+            clientId,
+            redirectUri,
+            popup: popup,
+            params: {
+              showSignupOption: true,
+              signupType: 'esri'
+            }
+          };
+          
+          arcgisRest.UserSession.beginOAuth2(oauth2Options)
+          return;
+        }
+        if(opener && opener.parent){//popup window
+          //There is a bug when popup is true of arcgis-rest-js that will occur the error:
+          //o.opener.parent[("__ESRI_REST_AUTH_HANDLER_" + z)] is not a function
+          //see https://github.com/Esri/arcgis-rest-js/issues/580
+          arcgisRest.UserSession.completeOAuth2({
+            portal: query.portal,
+            clientId: query.clientId
+          });
+          // completeOAuth2ForPopupWindow(query, hash);
+          // close();
+          
+        }else {
+          const session = arcgisRest.UserSession.completeOAuth2({
+            portal: query.portal,
+            clientId: query.clientId,
+          });
+          writeCookie(session, query);
+          window.location.href = query.fromUrl;
+        }
+      }
+
+      function getQueryAndHashObject(){
+        var query = window.location.search;
+        var queryObject = {};
+        if (query.indexOf('?') > -1) {
+          query = query.substr(1);
+        }
+        //Appoint fromUrl is located in the last of the query
+        const fromUrlIndex = query.indexOf('fromUrl');
+        if(fromUrlIndex > -1){
+          const fromUrlQuery = query.substr(fromUrlIndex);
+          const equalIndex = fromUrlQuery.indexOf('=');
+          queryObject[fromUrlQuery.substring(0, equalIndex)] = fromUrlQuery.substr(equalIndex + 1);
+
+          query = query.substring(0, fromUrlIndex - 1);
+        }
+        if(!!query){
+          var pairs = query.split('&');
+          for(var i = 0; i < pairs.length; i++){
+            var splits = decodeURIComponent(pairs[i]).split('=');
+            var v = splits[1];
+            queryObject[splits[0]] = splits[1];
+          }
+        }
+        queryObject.clientId = queryObject.clientId || queryObject.clientID
+
+        // get error message
+        var hash = window.location.hash;
+        var hashObject = {};
+        hash = hash.substr(1);
+        pairs = hash.split('&');
+        for(i = 0; i < pairs.length; i++){
+          var splits = decodeURIComponent(pairs[i]).split('=');
+          var v = splits[1];
+          hashObject[splits[0]] = splits[1];
+        }
+        
+        return {hash: hashObject, query: queryObject};
+      }
+
+      function _getHostname(url) {
+        if(!url)return null;
+        const urlLower = url.toLocaleLowerCase();
+        let schema = '';
+        let iStart = urlLower.indexOf('https://');
+        if(iStart === 0){
+          schema = 'https://';
+        }else {
+          iStart = urlLower.indexOf('http://');
+          if(iStart === 0){
+            schema = 'http://';
+          }
+        }
+        iStart = schema.length;
+        let iEnd = urlLower.indexOf(':', iStart);
+        if(iEnd === -1){
+          iEnd = urlLower.indexOf('/', iStart);
+        }
+        if(iEnd === -1){
+          iEnd = urlLower.length;
+        }
+        return urlLower.substring(iStart, iEnd);
+      }
+
+      function _getPortalUrlInfo(portalUrl){
+        if(!portalUrl)return null;
+        let portalUrlLower = portalUrl.toLocaleLowerCase();
+        let schema = '';
+        let iStart = portalUrlLower.indexOf('https://');
+        if(iStart === 0){
+          schema = 'https://';
+        }else {
+          iStart = portalUrlLower.indexOf('http://');
+          if(iStart === 0){
+            schema = 'http://';
+          }
+        }
+        iStart = schema.length;
+        let iEnd = portalUrlLower.indexOf('/sharing/rest', iStart);
+        iEnd = iEnd < 0 ? portalUrlLower.length : iEnd;
+        portalUrlLower = portalUrlLower.substring(iStart, iEnd);
+        let urlKey, customBaseUrl;
+        let parts = portalUrlLower.split('.');
+        urlKey = parts[0];
+        parts.splice(0, 1);
+        customBaseUrl = parts.join('.');
+        
+        return {
+          urlKey,
+          customBaseUrl,
+          schema
+        }
+      }
+
+      function _isArcgisUrl(url, isHostname){
+        if(!url)return false;
+        let hostname = url;
+        if(!isHostname){
+          hostname = _getHostname(url);
+          if(!hostname)return false;
+        }
+        hostname = hostname.toLowerCase();
+        return (hostname.indexOf('.arcgis.com') > -1 || hostname === 'arcgis.com');
+      }
+
+      function _canWriteCookie(clientId){
+        return !_isArcgisUrl(window.location.hostname, true) || clientId !== 'experienceBuilder'
+      }
+
+      function writeCookie(session, query){
+        const {urlKey, customBaseUrl, schema} = _getPortalUrlInfo(session.portal);
+        let esriAuthJson = {
+          portalApp: false,
+          email: session.username,
+          token: session.token,
+          expires: session.tokenExpires,
+          urlKey: urlKey,
+          customBaseUrl: customBaseUrl,
+          schema: schema
+        }
+        Cookies.set('exb_auth', JSON.stringify(esriAuthJson));
+
+        if(query.isDevEdition) {
+          const i = query.portal.indexOf('/sharing/rest');
+          let portalUrl = query.portal.substring(0, i);
+          //Cookies.set('exb_portalurl', portalUrl, {expires: 365});
+        }
+      }
+      processAuthentication();
+    </script>
+  </body>
+</html>
