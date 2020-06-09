@@ -36,4 +36,4 @@ If you want to include a widget that is primarily placed as an icon over the map
 
 ## More
 
-View my other Experience Builder projects [here](https://github.com/gavinr?tab=repositories&q=experience-builder)
+View my other Experience Builder projects [here](https://github.com/gavinr?tab=repositories&q=experience-builder).
