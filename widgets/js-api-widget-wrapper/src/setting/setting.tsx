@@ -4,9 +4,8 @@ import { IMConfig } from "../config";
 import defaultMessages from "./translations/default";
 import {
   JimuMapViewSelector,
-  SettingSection,
-  SettingRow
-} from "jimu-ui/setting-components";
+  SettingSection
+} from "jimu-ui/advanced/setting-components";
 
 export default class Setting extends BaseWidgetSetting<
   AllWidgetSettingProps<IMConfig>,

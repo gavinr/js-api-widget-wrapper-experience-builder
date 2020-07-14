@@ -4,12 +4,12 @@
   "type": "widget",
   "version": "1.0.0",
   "dependency": "jimu-arcgis",
-  "exbVersion": "1.0.0",
+  "exbVersion": "1.1.0",
   "author": "Gavin Rehkemper, Esri",
   "description": "Example of an Experience Builder widget that can wrap any ArcGIS API for JavaScript widget.",
   "license": "http://www.apache.org/licenses/LICENSE-2.0",
   "properties": {},
-  "supportedLocales": [
+  "translatedLocales": [
     "en"
   ],
   "defaultSize": {
