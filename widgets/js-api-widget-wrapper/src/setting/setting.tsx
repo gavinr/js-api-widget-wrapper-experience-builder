@@ -1,40 +1,34 @@
-import { React, FormattedMessage } from "jimu-core";
-import { BaseWidgetSetting, AllWidgetSettingProps } from "jimu-for-builder";
-import { IMConfig } from "../config";
+import { React } from "jimu-core";
+import { AllWidgetSettingProps } from "jimu-for-builder";
 import defaultMessages from "./translations/default";
 import {
   JimuMapViewSelector,
   SettingSection,
-  SettingRow
-} from "jimu-ui/setting-components";
+} from "jimu-ui/advanced/setting-components";
 
-export default class Setting extends BaseWidgetSetting<
-  AllWidgetSettingProps<IMConfig>,
-  any
-> {
-  onMapWidgetSelected = (useMapWidgetIds: string[]) => {
-    this.props.onSettingChange({
-      id: this.props.id,
+export default function Setting(props: AllWidgetSettingProps<any>) {
+
+  const onMapWidgetSelected = (useMapWidgetIds: string[]) => {
+    props.onSettingChange({
+      id: props.id,
       useMapWidgetIds: useMapWidgetIds
     });
   };
 
-  render() {
-    return (
-      <div className="widget-setting-js-api-widget-wrapper">
-        <SettingSection
-          className="map-selector-section"
-          title={this.props.intl.formatMessage({
-            id: "selectMapWidget",
-            defaultMessage: defaultMessages.selectMapWidget
-          })}
-        >
-          <JimuMapViewSelector
-            onSelect={this.onMapWidgetSelected}
-            useMapWidgetIds={this.props.useMapWidgetIds}
-          />
-        </SettingSection>
-      </div>
-    );
-  }
+  return (
+    <div className="widget-setting-js-api-widget-wrapper">
+      <SettingSection
+        className="map-selector-section"
+        title={props.intl.formatMessage({
+          id: "selectMapWidget",
+          defaultMessage: defaultMessages.selectMapWidget
+        })}
+      >
+        <JimuMapViewSelector
+          onSelect={onMapWidgetSelected}
+          useMapWidgetIds={props.useMapWidgetIds}
+        />
+      </SettingSection>
+    </div>
+  );
 }
