@@ -30,10 +30,8 @@ The main example here includes the [2D Measurement widget](https://developers.ar
 1. Make sure *both* scripts are running (in the `server` folder and `client`) folder).
 1. Every time you make a change to your widget, it will be re-built with webpack automatically.
 
-## Icon Widget
-
-If you want to include a widget that is primarily placed as an icon over the map (using `view.ui.add()`), like the [Compass widget](https://developers.arcgis.com/javascript/latest/sample-code/widgets-compass-2d/index.html), an example is shown in the [compass branch here](https://github.com/gavinr/js-api-widget-wrapper-experience-builder/tree/compass) ([download zip](https://github.com/gavinr/js-api-widget-wrapper-experience-builder/archive/compass.zip)). This will be a less-common use case for custom widgets, because the out-of-the-box Experience Builder Map Widget allows you to easily enable/disable these types of widgets in the widget settings.
-
 ## More
 
 View my other Experience Builder projects [here](https://github.com/gavinr?tab=repositories&q=experience-builder).
+
+View another example of using a JS API widget within Experience Builder [here](https://developers.arcgis.com/experience-builder/sample-code/widgets/js-api-widget/) and [here](https://developers.arcgis.com/experience-builder/sample-code/widgets/editor/).
